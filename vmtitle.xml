@@ -1,146 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="system" method="upgrade">
-	<name>System - GiBi VMtitle</name>
-	<version>1.5</version>
-  <creationDate>2013-01-11</creationDate>
-	<author>GiBiLogic</author>
-	<authorEmail>info@gibilogic.com</authorEmail>
-	<authorUrl>www.gibilogic.com</authorUrl>
- 	<copyright>Copyright (C) 2013 GiBiLogic snc. All rights reserved.</copyright>
-	<license>GNU/GPL v2 or later</license>
-	<description><![CDATA[
+    <name>System - GiBi VMtitle</name>
+    <version>1.6</version>
+    <creationDate>2013-09-18</creationDate>
+    <author>GiBiLogic</author>
+    <authorEmail>info@gibilogic.com</authorEmail>
+    <authorUrl>www.gibilogic.com</authorUrl>
+    <copyright>Copyright (C) 2013 GiBiLogic snc. All rights reserved.</copyright>
+    <license>GNU/GPL v2 or later</license>
+    <description><![CDATA[
     <img src='http://extensions.gibilogic.com/images/gibilogicextensions-150x150.png' style='float: left;margin: 0 10px 10px 0' />
     <h1>GiBi VMtitle</h1>
     <h2>A Joomla extension from <a href='http://www.gibilogic.com'>GiBiLogic</a></h2>
     <p>This plugin helps you set the desired page title for your VirtueMart 2 pages.</p>
-    <p>Discover other extension by <strong>GiBiLogic</strong> at <a href='http://extensions.gibilogic.com'>extensions.gibilogic.com</a></p>  
+    <p>Discover other extension by <strong>GiBiLogic</strong> at <a href='http://extensions.gibilogic.com'>extensions.gibilogic.com</a></p>
   ]]>
-  </description>
-	<files>
-		<filename plugin="vmtitle">vmtitle.php</filename>
-		<filename>index.html</filename>
-	</files>
-	<languages>
-		<language tag="en-GB">en-GB.plg_system_vmtitle.ini</language>
-	</languages>
-	<config>
-		<fields name="params">
-			<fieldset name="virtuemart" label="PLG_SYSTEM_VMTITLE_FIELDSET_VIRTUEMART_LABEL">
-        <field name="virtuemart_enable"
-          default="0"
-          type="radio"
-          description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL" 
-        >
-          <option value="1">JYes</option>
-          <option value="0">JNo</option>
-        </field>
-				<field name="virtuemart_sitename_order" 
-          type="text" 
-          size="1"
-          description="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_SITENAME_ORDER_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_SITENAME_ORDER_LABEL" 
-					default="0" />
-				<field name="virtuemart_customtext_order" 
-          type="text" 
-          size="1"
-          description="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_CUSTOMTEXT_ORDER_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_CUSTOMTEXT_ORDER_LABEL" 
-					default="0" />
-        <field name="virtuemart_customtext" 
-          type="text" 
-          description="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_CUSTOMTEXT_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_CUSTOMTEXT_LABEL" 
-					default="" />
-      </fieldset>
-			<fieldset name="categories" label="PLG_SYSTEM_VMTITLE_FIELDSET_CATEGORIES_LABEL">
-        <field name="categories_enable"
-          default="0"
-          type="radio"
-          description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL" 
-        >
-          <option value="1">JYes</option>
-          <option value="0">JNo</option>
-        </field>				
-        <field name="categories_name_order" 
-          type="text" 
-          size="1"
-          description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_NAME_ORDER_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_NAME_ORDER_LABEL" 
-					default="0" />
-				<field name="categories_sitename_order" 
-          type="text" 
-          size="1"
-          description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_SITENAME_ORDER_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_SITENAME_ORDER_LABEL" 
-					default="0" />
-        <field name="categories_sitename_order" 
-          type="text" 
-          size="1"
-          description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_SITENAME_ORDER_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_SITENAME_ORDER_LABEL" 
-					default="0" />
-				<field name="categories_customtext_order" 
-          type="text" 
-          size="1"
-          description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_CUSTOMTEXT_ORDER_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_CUSTOMTEXT_ORDER_LABEL" 
-					default="0" />
-				<field name="categories_customtext" 
-          type="text" 
-          description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_CUSTOMTEXT_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_CUSTOMTEXT_LABEL" 
-					default="" />
-      </fieldset>
-			<fieldset name="category" label="PLG_SYSTEM_VMTITLE_FIELDSET_CATEGORY_LABEL">
-        <field name="category_enable" default="0" type="radio" description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL">
-          <option value="1">JYes</option>
-          <option value="0">JNo</option>
-        </field>	        
-				<field name="category_name_order" type="text" size="1" description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_NAME_ORDER_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_NAME_ORDER_LABEL" default="0" />
-				<field name="category_metatitle" type="radio" description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_METATITLE_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_METATITLE_LABEL" default="0">
-          <option value="1">JYes</option>
-          <option value="0">JNo</option>
-        </field>
-				<field name="category_sitename_order" type="text" size="1" description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_SITENAME_ORDER_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_SITENAME_ORDER_LABEL" default="0" />
-				<field name="category_customtext_order" type="text" size="1" description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_CUSTOMTEXT_ORDER_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_CUSTOMTEXT_ORDER_LABEL" default="0" />
-				<field name="category_customtext" type="text" description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_CUSTOMTEXT_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_CUSTOMTEXT_LABEL" default="" />
-      </fieldset>
-      <fieldset name="product" label="PLG_SYSTEM_VMTITLE_FIELDSET_PRODUCT_LABEL">
-        <field name="product_enable"
-          default="0"
-          type="radio"
-          description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL" 
-        >
-          <option value="1">JYes</option>
-          <option value="0">JNo</option>
-        </field>	        
-				<field name="productdetails_name_order" 
-          type="text" 
-          size="1"
-          description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_NAME_ORDER_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_NAME_ORDER_LABEL" 
-					default="0" />
-				<field name="productdetails_sitename_order" 
-          type="text" 
-          size="1"
-          description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_SITENAME_ORDER_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_SITENAME_ORDER_LABEL" 
-					default="0" />
-				<field name="productdetails_customtext_order" 
-          type="text" 
-          size="1"
-          description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_ORDER_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_ORDER_LABEL" 
-					default="0" />
-				<field name="productdetails_customtext" 
-          type="text" 
-          description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_DESC" 
-          label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_LABEL" 
-					default="" />
-      </fieldset>
-    </fields>
-  </config>
+    </description>
+    <files>
+        <filename plugin="vmtitle">vmtitle.php</filename>
+    </files>
+    <languages>
+        <language tag="en-GB">en-GB.plg_system_vmtitle.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="virtuemart" label="PLG_SYSTEM_VMTITLE_FIELDSET_VIRTUEMART_LABEL">
+                <field name="virtuemart_enable"
+               default="0"
+               type="radio"
+               description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL"
+                >
+                    <option value="1">JYes</option>
+                    <option value="0">JNo</option>
+                </field>
+                <field name="virtuemart_sitename_order"
+               type="text"
+               size="1"
+               description="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_SITENAME_ORDER_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_SITENAME_ORDER_LABEL"
+               default="0" />
+                <field name="virtuemart_customtext_order"
+               type="text"
+               size="1"
+               description="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_CUSTOMTEXT_ORDER_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_CUSTOMTEXT_ORDER_LABEL"
+               default="0" />
+                <field name="virtuemart_customtext"
+               type="text"
+               description="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_CUSTOMTEXT_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_VIRTUEMART_CUSTOMTEXT_LABEL"
+               default="" />
+            </fieldset>
+            <fieldset name="categories" label="PLG_SYSTEM_VMTITLE_FIELDSET_CATEGORIES_LABEL">
+                <field name="categories_enable"
+               default="0"
+               type="radio"
+               description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL"
+                >
+                    <option value="1">JYes</option>
+                    <option value="0">JNo</option>
+                </field>
+                <field name="categories_name_order"
+               type="text"
+               size="1"
+               description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_NAME_ORDER_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_NAME_ORDER_LABEL"
+               default="0" />
+                <field name="categories_sitename_order"
+               type="text"
+               size="1"
+               description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_SITENAME_ORDER_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_SITENAME_ORDER_LABEL"
+               default="0" />
+                <field name="categories_sitename_order"
+               type="text"
+               size="1"
+               description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_SITENAME_ORDER_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_SITENAME_ORDER_LABEL"
+               default="0" />
+                <field name="categories_customtext_order"
+               type="text"
+               size="1"
+               description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_CUSTOMTEXT_ORDER_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_CUSTOMTEXT_ORDER_LABEL"
+               default="0" />
+                <field name="categories_customtext"
+               type="text"
+               description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_CUSTOMTEXT_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORIES_CUSTOMTEXT_LABEL"
+               default="" />
+            </fieldset>
+            <fieldset name="category" label="PLG_SYSTEM_VMTITLE_FIELDSET_CATEGORY_LABEL">
+                <field name="category_enable" default="0" type="radio" description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL">
+                    <option value="1">JYes</option>
+                    <option value="0">JNo</option>
+                </field>
+                <field name="category_name_order" type="text" size="1" description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_NAME_ORDER_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_NAME_ORDER_LABEL" default="0" />
+                <field name="category_metatitle" type="radio" description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_METATITLE_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_METATITLE_LABEL" default="0">
+                    <option value="1">JYes</option>
+                    <option value="0">JNo</option>
+                </field>
+                <field name="category_sitename_order" type="text" size="1" description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_SITENAME_ORDER_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_SITENAME_ORDER_LABEL" default="0" />
+                <field name="category_customtext_order" type="text" size="1" description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_CUSTOMTEXT_ORDER_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_CUSTOMTEXT_ORDER_LABEL" default="0" />
+                <field name="category_customtext" type="text" description="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_CUSTOMTEXT_DESC" label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_CUSTOMTEXT_LABEL" default="" />
+            </fieldset>
+            <fieldset name="product" label="PLG_SYSTEM_VMTITLE_FIELDSET_PRODUCT_LABEL">
+                <field name="product_enable"
+               default="0"
+               type="radio"
+               description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL"
+                >
+                    <option value="1">JYes</option>
+                    <option value="0">JNo</option>
+                </field>
+                <field name="productdetails_name_order"
+               type="text"
+               size="1"
+               description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_NAME_ORDER_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_NAME_ORDER_LABEL"
+               default="0" />
+                <field name="productdetails_sitename_order"
+               type="text"
+               size="1"
+               description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_SITENAME_ORDER_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_SITENAME_ORDER_LABEL"
+               default="0" />
+                <field name="productdetails_customtext_order"
+               type="text"
+               size="1"
+               description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_ORDER_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_ORDER_LABEL"
+               default="0" />
+                <field name="productdetails_customtext"
+               type="text"
+               description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_LABEL"
+               default="" />
+            </fieldset>
+        </fields>
+    </config>
 </extension>
