@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @version			  vmtitle.php 2013-09-18 10:36:00 UTC zanardi
+ * @version			  vmtitle.php 2013-09-19 08:29:00 UTC zanardi
  * @package			  GiBi VMtitle
  * @author			  GiBiLogic <info@gibilogic.com>
  * @authorUrl		  http://www.gibilogic.com
@@ -15,58 +16,85 @@ class plgSystemVmtitle extends JPlugin
     public function onAfterDispatch()
     {
         // frontend only
-        $app = JFactory::getApplication();
-        if ($app->getName() != 'site')
+        $this->app = JFactory::getApplication();
+        if ($this->app->getName() != 'site')
             return true;
 
         // VirtueMart only
-        if (JRequest::getCmd('option', '') != "com_virtuemart")
+        if ($this->app->input->get('option', '') != "com_virtuemart")
             return true;
 
-        // Get page type
+        $this->setTitle();
+        $this->setDescription();
+
+        return true;
+    }
+
+    /**
+     * Set page title
+     *
+     * @return bool
+     */
+    private function setTitle()
+    {
+        // set title by request
+        if ($title = $this->app->input->get('title')) {
+            JFactory::getDocument()->setTitle($title);
+            return true;
+        }
+
+        // set title by rules according to page type
         $title = null;
-        switch (JRequest::getCmd('view', '')) {
+        switch ($this->app->input->get('view', '')) {
             case 'virtuemart':
                 if ($this->params->get('virtuemart_enable', 0)) {
-                    $title = $this->_setVirtuemartViewTitle();
+                    $title = $this->setVirtuemartViewTitle();
                 }
                 break;
 
             case 'categories':
                 if ($this->params->get('categories_enable', 0)) {
-                    $title = $this->_setCategoriesViewTitle();
+                    $title = $this->setCategoriesViewTitle();
                 }
                 break;
 
             case 'category':
                 if ($this->params->get('category_enable', 0)) {
-                    $title = $this->_setCategoryViewTitle();
+                    $title = $this->setCategoryViewTitle();
                 }
                 break;
 
             case 'productdetails':
                 if ($this->params->get('product_enable', 0)) {
-                    $title = $this->_setProductDetailsViewTitle();
+                    $title = $this->setProductDetailsViewTitle();
                 }
                 break;
 
             default:
         }
 
-        $document = & JFactory::getDocument();
-        if ($title)
-            $document->setTitle($title);
+        if ($title) {
+            JFactory::getDocument()->setTitle($title);
+        }
         return true;
     }
 
-    private function _setCategoriesViewTitle()
+    private function setDescription()
+    {
+        if ($description= $this->app->input->get('metadescription')) {
+            JFactory::getDocument()->setDescription($description);
+        }
+        return true;
+    }
+
+    private function setCategoriesViewTitle()
     {
         $title_chunks = array();
         if ($this->params->get('categories_name_order', 0) != 0) {
-            $title_chunks[$this->params->get('categories_name_order')] = $this->_getCategoryName();
+            $title_chunks[$this->params->get('categories_name_order')] = $this->getCategoryName();
         }
         if ($this->params->get('categories_sitename_order', 0) != 0) {
-            $title_chunks[$this->params->get('categories_sitename_order')] = $this->_getSiteName();
+            $title_chunks[$this->params->get('categories_sitename_order')] = $this->getSiteName();
         }
         if ($this->params->get('categories_customtext_order', 0) != 0) {
             $title_chunks[$this->params->get('categories_customtext_order')] = $this->params->get('categories_customtext', '');
@@ -75,19 +103,19 @@ class plgSystemVmtitle extends JPlugin
         return ( join(' ', $title_chunks) );
     }
 
-    private function _setCategoryViewTitle()
+    private function setCategoryViewTitle()
     {
         $title_chunks = array();
         if ($this->params->get('category_name_order', 0) != 0) {
-            if (( $this->params->get('category_metatitle', 0) != 0 ) && ( $metatitle = $this->_getCategoryMetaTitle() )) {
+            if (( $this->params->get('category_metatitle', 0) != 0 ) && ( $metatitle = $this->getCategoryMetaTitle() )) {
                 $title_chunks[$this->params->get('category_name_order')] = $metatitle;
             }
             else {
-                $title_chunks[$this->params->get('category_name_order')] = $this->_getCategoryName();
+                $title_chunks[$this->params->get('category_name_order')] = $this->getCategoryName();
             }
         }
         if ($this->params->get('category_sitename_order', 0) != 0) {
-            $title_chunks[$this->params->get('category_sitename_order')] = $this->_getSiteName();
+            $title_chunks[$this->params->get('category_sitename_order')] = $this->getSiteName();
         }
         if ($this->params->get('category_customtext_order', 0) != 0) {
             $title_chunks[$this->params->get('category_customtext_order')] = $this->params->get('category_customtext', '');
@@ -96,14 +124,14 @@ class plgSystemVmtitle extends JPlugin
         return ( join(' ', $title_chunks) );
     }
 
-    private function _setProductDetailsViewTitle()
+    private function setProductDetailsViewTitle()
     {
         $title_chunks = array();
         if ($this->params->get('productdetails_name_order', 0) != 0) {
-            $title_chunks[$this->params->get('productdetails_name_order')] = $this->_getProductName();
+            $title_chunks[$this->params->get('productdetails_name_order')] = $this->getProductName();
         }
         if ($this->params->get('productdetails_sitename_order', 0) != 0) {
-            $title_chunks[$this->params->get('productdetails_sitename_order')] = $this->_getSiteName();
+            $title_chunks[$this->params->get('productdetails_sitename_order')] = $this->getSiteName();
         }
         if ($this->params->get('productdetails_customtext_order', 0) != 0) {
             $title_chunks[$this->params->get('productdetails_customtext_order')] = $this->params->get('productdetails_customtext', '');
@@ -112,11 +140,11 @@ class plgSystemVmtitle extends JPlugin
         return ( join(' ', $title_chunks) );
     }
 
-    private function _setVirtuemartViewTitle()
+    private function setVirtuemartViewTitle()
     {
         $title_chunks = array();
         if ($this->params->get('virtuemart_sitename_order', 0) != 0) {
-            $title_chunks[$this->params->get('virtuemart_sitename_order')] = $this->_getSiteName();
+            $title_chunks[$this->params->get('virtuemart_sitename_order')] = $this->getSiteName();
         }
         if ($this->params->get('virtuemart_customtext_order', 0) != 0) {
             $title_chunks[$this->params->get('virtuemart_customtext_order')] = $this->params->get('virtuemart_customtext', '');
@@ -125,7 +153,7 @@ class plgSystemVmtitle extends JPlugin
         return ( join(' ', $title_chunks) );
     }
 
-    private function _getCategoryName()
+    private function getCategoryName()
     {
         if (!class_exists('VmConfig'))
             require(JPATH_ADMINISTRATOR . '/components/com_virtuemart/helpers/config.php');
@@ -134,7 +162,7 @@ class plgSystemVmtitle extends JPlugin
         return $category->category_name;
     }
 
-    private function _getCategoryMetaTitle()
+    private function getCategoryMetaTitle()
     {
         if (!class_exists('VmConfig'))
             require(JPATH_ADMINISTRATOR . '/components/com_virtuemart/helpers/config.php');
@@ -143,7 +171,7 @@ class plgSystemVmtitle extends JPlugin
         return $category->customtitle;
     }
 
-    private function _getProductName()
+    private function getProductName()
     {
         if (!class_exists('VmConfig'))
             require(JPATH_ADMINISTRATOR . '/components/com_virtuemart/helpers/config.php');
@@ -152,7 +180,7 @@ class plgSystemVmtitle extends JPlugin
         return $product->product_name;
     }
 
-    private function _getSiteName()
+    private function getSiteName()
     {
         $config = JFactory::getConfig();
         return( $config->get('sitename') );

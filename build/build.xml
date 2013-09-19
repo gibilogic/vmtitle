@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="vmtitle" default="Build ZIP package" basedir=".">
+	<description>GiBi VMtitle</description>
+	<property file="build.properties" />
+
+	<property name="dir.plugin" location="../src/plugin" />
+	<property name="dir.release" location="../release" />
+
+	<target name="Build ZIP package" depends="Clean releases">
+		<echo message="Building the ZIP packages..." />
+		<zip destfile="${dir.release}/${plugin.name}.zip" basedir="${dir.plugin}" whenempty="fail" />
+	</target>
+
+	<target name="Clean releases">
+		<echo message="Cleaning the project..." />
+		<delete includeemptydirs="true">
+			<fileset dir="${dir.release}/">
+				<include name="*.zip" />
+			</fileset>
+		</delete>
+	</target>
+
+</project>
