@@ -122,6 +122,12 @@
                description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_NAME_ORDER_DESC"
                label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_NAME_ORDER_LABEL"
                default="0" />
+                <field name="productdetails_manufacturer_order"
+               type="text"
+               size="1"
+               description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_MANUFACTURER_ORDER_DESC"
+               label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_MANUFACTURER_ORDER_LABEL"
+               default="0" />
                 <field name="productdetails_sitename_order"
                type="text"
                size="1"

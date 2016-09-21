@@ -81,6 +81,7 @@ class plgSystemVmtitle extends JPlugin
         if ($title) {
             JFactory::getDocument()->setTitle($title);
         }
+
         return true;
     }
 
@@ -94,6 +95,7 @@ class plgSystemVmtitle extends JPlugin
         if ($description = $this->app->input->get('metadescription')) {
             JFactory::getDocument()->setDescription($description);
         }
+
         return true;
     }
 
@@ -115,6 +117,7 @@ class plgSystemVmtitle extends JPlugin
             $title_chunks[$this->params->get('categories_customtext_order')] = $this->params->get('categories_customtext', '');
         }
         ksort($title_chunks);
+
         return (join(' ', $title_chunks));
     }
 
@@ -140,6 +143,7 @@ class plgSystemVmtitle extends JPlugin
             $title_chunks[$this->params->get('category_customtext_order')] = $this->params->get('category_customtext', '');
         }
         ksort($title_chunks);
+
         return (join(' ', $title_chunks));
     }
 
@@ -151,16 +155,20 @@ class plgSystemVmtitle extends JPlugin
     private function setProductDetailsViewTitle()
     {
         $title_chunks = array();
-        if ($this->params->get('productdetails_name_order', 0) != 0) {
+        if ($this->params->get('productdetails_name_order', 0)) {
             $title_chunks[$this->params->get('productdetails_name_order')] = $this->getProductName();
         }
-        if ($this->params->get('productdetails_sitename_order', 0) != 0) {
+        if ($this->params->get('productdetails_manufacturer_order', 0)) {
+            $title_chunks[$this->params->get('productdetails_manufacturer_order')] = $this->getManufacturerName();
+        }
+        if ($this->params->get('productdetails_sitename_order', 0)) {
             $title_chunks[$this->params->get('productdetails_sitename_order')] = $this->getSiteName();
         }
-        if ($this->params->get('productdetails_customtext_order', 0) != 0) {
+        if ($this->params->get('productdetails_customtext_order', 0)) {
             $title_chunks[$this->params->get('productdetails_customtext_order')] = $this->params->get('productdetails_customtext', '');
         }
         ksort($title_chunks);
+
         return (join(' ', $title_chunks));
     }
 
@@ -180,6 +188,7 @@ class plgSystemVmtitle extends JPlugin
         }
 
         ksort($title_chunks);
+
         return (join(' ', $title_chunks));
     }
 
@@ -190,11 +199,9 @@ class plgSystemVmtitle extends JPlugin
      */
     private function getCategoryName()
     {
-        if (!class_exists('VmConfig')) {
-            require(JPATH_ADMINISTRATOR . '/components/com_virtuemart/helpers/config.php');
-        }
-        $vm_config = VmConfig::loadConfig();
+        $this->loadVirtuemartConfig();
         $category = \VmModel::getModel('category')->getData();
+
         return $category->category_name;
     }
 
@@ -205,11 +212,9 @@ class plgSystemVmtitle extends JPlugin
      */
     private function getCategoryMetaTitle()
     {
-        if (!class_exists('VmConfig')) {
-            require(JPATH_ADMINISTRATOR . '/components/com_virtuemart/helpers/config.php');
-        }
-        $vm_config = VmConfig::loadConfig();
+        $this->loadVirtuemartConfig();
         $category = VmModel::getModel('category')->getData();
+
         return $category->customtitle;
     }
 
@@ -220,12 +225,44 @@ class plgSystemVmtitle extends JPlugin
      */
     private function getProductName()
     {
+        $this->loadVirtuemartConfig();
+        $product = VmModel::getModel('product')->getData();
+
+        return $product->product_name;
+    }
+
+    /**
+     * Get manufacturer for current product
+     */
+    private function getManufacturerName()
+    {
+        $this->loadVirtuemartConfig();
+        $product = VmModel::getModel('product')->getData();
+
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('virtuemart_manufacturer_id')
+            ->from('#__virtuemart_product_manufacturers')
+            ->where('virtuemart_product_id = ' . $product->virtuemart_product_id);
+        $db->setQuery($query);
+        try {
+            $manufacturer = VmModel::getModel('manufacturer')->getData($db->loadResult());
+
+            return $manufacturer->mf_name;
+        } catch (\Exception $ex) {
+            return '';
+        }
+    }
+
+    /**
+     * Load VirtueMart config, which also initialize VirtueMart internal autoloader
+     */
+    private function loadVirtuemartConfig()
+    {
         if (!class_exists('VmConfig')) {
             require(JPATH_ADMINISTRATOR . '/components/com_virtuemart/helpers/config.php');
         }
-        $vm_config = VmConfig::loadConfig();
-        $product = VmModel::getModel('product')->getData();
-        return $product->product_name;
+        VmConfig::loadConfig();
     }
 
     /**
