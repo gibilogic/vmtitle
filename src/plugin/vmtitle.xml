@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="system" method="upgrade">
     <name>System - GiBi VMtitle</name>
-    <version>1.6</version>
-    <creationDate>2013-09-18</creationDate>
+    <version>1.7</version>
+    <creationDate>2016-09-21</creationDate>
     <author>GiBiLogic</author>
     <authorEmail>info@gibilogic.com</authorEmail>
     <authorUrl>www.gibilogic.com</authorUrl>
-    <copyright>Copyright (C) 2013 GiBiLogic snc. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2013-2016 GiBiLogic. All rights reserved.</copyright>
     <license>GNU/GPL v2 or later</license>
     <description><![CDATA[
     <img src='http://extensions.gibilogic.com/images/gibilogicextensions-150x150.png' style='float: left;margin: 0 10px 10px 0' />

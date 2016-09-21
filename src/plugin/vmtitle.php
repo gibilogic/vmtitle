@@ -1,28 +1,33 @@
 <?php
 
 /**
- * @version			  vmtitle.php 2013-09-19 08:29:00 UTC zanardi
- * @package			  GiBi VMtitle
- * @author			  GiBiLogic <info@gibilogic.com>
- * @authorUrl		  http://www.gibilogic.com
- * @license			  GNU/GPL v2 or later
- * @description   Joomla 2.5 en-GB backend system language file
+ * @version         vmtitle.php 2016-09-21 12:34:00 UTC zanardi
+ * @package            GiBi VMtitle
+ * @author            GiBiLogic <info@gibilogic.com>
+ * @authorUrl        http://www.gibilogic.com
+ * @license            GNU/GPL v3 or later
  */
 defined('_JEXEC') or die;
 
 class plgSystemVmtitle extends JPlugin
 {
+    /**
+     * @var \JApplicationCms
+     */
+    private $app;
 
     public function onAfterDispatch()
     {
         // frontend only
-        $this->app = JFactory::getApplication();
-        if ($this->app->getName() != 'site')
+        $this->app = \JFactory::getApplication();
+        if ($this->app->getName() != 'site') {
             return true;
+        }
 
         // VirtueMart only
-        if ($this->app->input->get('option', '') != "com_virtuemart")
+        if ($this->app->input->get('option', '') != "com_virtuemart") {
             return true;
+        }
 
         $this->setTitle();
         $this->setDescription();
@@ -37,14 +42,14 @@ class plgSystemVmtitle extends JPlugin
      */
     private function setTitle()
     {
-        // set title by request
-        if ($title = $this->app->input->get('title')) {
-            JFactory::getDocument()->setTitle($title);
+        // Should set title by request?
+        $title = $this->app->input->get('title', '');
+        if ($title) {
+            \JFactory::getDocument()->setTitle($title);
             return true;
         }
 
         // set title by rules according to page type
-        $title = null;
         switch ($this->app->input->get('view', '')) {
             case 'virtuemart':
                 if ($this->params->get('virtuemart_enable', 0)) {
@@ -79,14 +84,24 @@ class plgSystemVmtitle extends JPlugin
         return true;
     }
 
+    /**
+     * Set meta description by request
+     *
+     * @return bool
+     */
     private function setDescription()
     {
-        if ($description= $this->app->input->get('metadescription')) {
+        if ($description = $this->app->input->get('metadescription')) {
             JFactory::getDocument()->setDescription($description);
         }
         return true;
     }
 
+    /**
+     * Build title for "categories" view
+     *
+     * @return string
+     */
     private function setCategoriesViewTitle()
     {
         $title_chunks = array();
@@ -100,17 +115,21 @@ class plgSystemVmtitle extends JPlugin
             $title_chunks[$this->params->get('categories_customtext_order')] = $this->params->get('categories_customtext', '');
         }
         ksort($title_chunks);
-        return ( join(' ', $title_chunks) );
+        return (join(' ', $title_chunks));
     }
 
+    /**
+     * Build title for "category" view
+     *
+     * @return string
+     */
     private function setCategoryViewTitle()
     {
         $title_chunks = array();
         if ($this->params->get('category_name_order', 0) != 0) {
-            if (( $this->params->get('category_metatitle', 0) != 0 ) && ( $metatitle = $this->getCategoryMetaTitle() )) {
+            if (($this->params->get('category_metatitle', 0) != 0) && ($metatitle = $this->getCategoryMetaTitle())) {
                 $title_chunks[$this->params->get('category_name_order')] = $metatitle;
-            }
-            else {
+            } else {
                 $title_chunks[$this->params->get('category_name_order')] = $this->getCategoryName();
             }
         }
@@ -121,9 +140,14 @@ class plgSystemVmtitle extends JPlugin
             $title_chunks[$this->params->get('category_customtext_order')] = $this->params->get('category_customtext', '');
         }
         ksort($title_chunks);
-        return ( join(' ', $title_chunks) );
+        return (join(' ', $title_chunks));
     }
 
+    /**
+     * Set title for "productdetails" view
+     *
+     * @return string
+     */
     private function setProductDetailsViewTitle()
     {
         $title_chunks = array();
@@ -137,9 +161,14 @@ class plgSystemVmtitle extends JPlugin
             $title_chunks[$this->params->get('productdetails_customtext_order')] = $this->params->get('productdetails_customtext', '');
         }
         ksort($title_chunks);
-        return ( join(' ', $title_chunks) );
+        return (join(' ', $title_chunks));
     }
 
+    /**
+     * Set title for "virtuemart" view
+     *
+     * @return string
+     */
     private function setVirtuemartViewTitle()
     {
         $title_chunks = array();
@@ -149,41 +178,65 @@ class plgSystemVmtitle extends JPlugin
         if ($this->params->get('virtuemart_customtext_order', 0) != 0) {
             $title_chunks[$this->params->get('virtuemart_customtext_order')] = $this->params->get('virtuemart_customtext', '');
         }
+
         ksort($title_chunks);
-        return ( join(' ', $title_chunks) );
+        return (join(' ', $title_chunks));
     }
 
+    /**
+     * Get full category name for current category
+     *
+     * @return string
+     */
     private function getCategoryName()
     {
-        if (!class_exists('VmConfig'))
+        if (!class_exists('VmConfig')) {
             require(JPATH_ADMINISTRATOR . '/components/com_virtuemart/helpers/config.php');
+        }
         $vm_config = VmConfig::loadConfig();
-        $category = VmModel::getModel('category')->getData();
+        $category = \VmModel::getModel('category')->getData();
         return $category->category_name;
     }
 
+    /**
+     * Get meta title set in VirtueMart for current category
+     *
+     * @return string
+     */
     private function getCategoryMetaTitle()
     {
-        if (!class_exists('VmConfig'))
+        if (!class_exists('VmConfig')) {
             require(JPATH_ADMINISTRATOR . '/components/com_virtuemart/helpers/config.php');
+        }
         $vm_config = VmConfig::loadConfig();
         $category = VmModel::getModel('category')->getData();
         return $category->customtitle;
     }
 
+    /**
+     * Get full name for current product
+     *
+     * @return string
+     */
     private function getProductName()
     {
-        if (!class_exists('VmConfig'))
+        if (!class_exists('VmConfig')) {
             require(JPATH_ADMINISTRATOR . '/components/com_virtuemart/helpers/config.php');
+        }
         $vm_config = VmConfig::loadConfig();
         $product = VmModel::getModel('product')->getData();
         return $product->product_name;
     }
 
+    /**
+     * Get site name
+     *
+     * @return string
+     */
     private function getSiteName()
     {
         $config = JFactory::getConfig();
-        return( $config->get('sitename') );
+        return ($config->get('sitename'));
     }
 
 }
