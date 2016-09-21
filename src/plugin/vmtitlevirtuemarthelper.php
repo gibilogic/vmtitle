@@ -82,7 +82,7 @@ class VmtitleVirtuemartHelper
     /**
      * Get manufacturer for current product
      */
-    public function getManufacturerName()
+    public function getManufacturerNameByProduct()
     {
         $product = VmModel::getModel('product')->getData();
 
@@ -96,6 +96,31 @@ class VmtitleVirtuemartHelper
             $manufacturer = VmModel::getModel('manufacturer')->getData($db->loadResult());
 
             return $manufacturer->mf_name;
+        } catch (\Exception $ex) {
+            return '';
+        }
+    }
+
+    /**
+     * Get category for current product
+     */
+    public function getCategoryNameByProduct()
+    {
+        $product = VmModel::getModel('product')->getData();
+
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('virtuemart_category_id')
+            ->from('#__virtuemart_product_categories')
+            ->where('virtuemart_product_id = ' . $product->virtuemart_product_id);
+        $db->setQuery($query);
+        try {
+            $category = VmModel::getModel('category')->getData($db->loadResult());
+            if (is_array($category)) {
+                $category = array_shift($category);
+            }
+
+            return $category->category_name;
         } catch (\Exception $ex) {
             return '';
         }

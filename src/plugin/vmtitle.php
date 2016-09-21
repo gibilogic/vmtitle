@@ -43,6 +43,7 @@ class plgSystemVmtitle extends JPlugin
 
         $this->setTitle();
         $this->setMetaDescription();
+        $this->setMetaKeywords();
 
         return true;
     }
@@ -129,6 +130,37 @@ class plgSystemVmtitle extends JPlugin
     }
 
     /**
+     * Set meta keywords
+     *
+     * @return bool
+     */
+    private function setMetaKeywords()
+    {
+        // Should we set meta keywords by request?
+        if ($metakeywords = $this->app->input->get('metakeywords')) {
+            JFactory::getDocument()->setMetaData('keywords', $metakeywords);
+            return true;
+        }
+
+        // set meta description by rules according to page type
+        switch ($this->app->input->get('view', '')) {
+            case 'productdetails':
+                if ($this->params->get('product_metadescription_enable', 0)) {
+                    $metakeywords = $this->buildProductDetailsViewMetaKeywords();
+                }
+                break;
+
+            default:
+        }
+
+        if ($metakeywords) {
+            JFactory::getDocument()->setMetaData('keywords', $metakeywords);
+        }
+
+        return true;
+    }
+
+    /**
      * Build title for "categories" view
      *
      * @return string
@@ -188,7 +220,7 @@ class plgSystemVmtitle extends JPlugin
             $title_chunks[$this->params->get('productdetails_name_order')] = $this->virtuemartHelper->getProductName();
         }
         if ($this->params->get('productdetails_manufacturer_order', 0)) {
-            $title_chunks[$this->params->get('productdetails_manufacturer_order')] = $this->virtuemartHelper->getManufacturerName();
+            $title_chunks[$this->params->get('productdetails_manufacturer_order')] = $this->virtuemartHelper->getManufacturerNameByProduct();
         }
         if ($this->params->get('productdetails_sitename_order', 0)) {
             $title_chunks[$this->params->get('productdetails_sitename_order')] = $this->getSiteName();
@@ -218,6 +250,29 @@ class plgSystemVmtitle extends JPlugin
         ksort($chunks);
 
         return (join(' ', $chunks));
+    }
+
+    /**
+     * Build meta keywords for "productdetails" view
+     *
+     * @return string
+     */
+    private function buildProductDetailsViewMetaKeywords()
+    {
+        $chunks = array();
+        if ($this->params->get('productdetails_keywords_name_order', 0)) {
+            $chunks[$this->params->get('productdetails_keywords_name_order')] = $this->virtuemartHelper->getProductName();
+        }
+        if ($this->params->get('productdetails_keywords_manufacturer_order', 0)) {
+            $chunks[$this->params->get('productdetails_keywords_manufacturer_order')] = $this->virtuemartHelper->getManufacturerNameByProduct();
+        }
+        if ($this->params->get('productdetails_keywords_category_order', 0)) {
+            $chunks[$this->params->get('productdetails_keywords_category_order')] = $this->virtuemartHelper->getCategoryNameByProduct();
+        }
+
+        ksort($chunks);
+
+        return (join(',', $chunks));
     }
 
     /**
