@@ -8,6 +8,7 @@
  * @license            GNU/GPL v3 or later
  */
 defined('_JEXEC') or die;
+require_once __DIR__ .'/vmtitlevirtuemarthelper.php';
 
 class plgSystemVmtitle extends JPlugin
 {
@@ -15,6 +16,17 @@ class plgSystemVmtitle extends JPlugin
      * @var \JApplicationCms
      */
     private $app;
+
+    /**
+     * @var \VmtitleVirtuemartHelper
+     */
+    private $virtuemartHelper;
+
+    public function __construct($subject, array $config)
+    {
+        parent::__construct($subject, $config);
+        $this->virtuemartHelper = new VmtitleVirtuemartHelper();
+    }
 
     public function onAfterDispatch()
     {
@@ -108,7 +120,7 @@ class plgSystemVmtitle extends JPlugin
     {
         $title_chunks = array();
         if ($this->params->get('categories_name_order', 0) != 0) {
-            $title_chunks[$this->params->get('categories_name_order')] = $this->getCategoryName();
+            $title_chunks[$this->params->get('categories_name_order')] = $this->virtuemartHelper->getCategoryName();
         }
         if ($this->params->get('categories_sitename_order', 0) != 0) {
             $title_chunks[$this->params->get('categories_sitename_order')] = $this->getSiteName();
@@ -130,10 +142,10 @@ class plgSystemVmtitle extends JPlugin
     {
         $title_chunks = array();
         if ($this->params->get('category_name_order', 0) != 0) {
-            if (($this->params->get('category_metatitle', 0) != 0) && ($metatitle = $this->getCategoryMetaTitle())) {
+            if (($this->params->get('category_metatitle', 0) != 0) && ($metatitle = $this->virtuemartHelper->getCategoryMetaTitle())) {
                 $title_chunks[$this->params->get('category_name_order')] = $metatitle;
             } else {
-                $title_chunks[$this->params->get('category_name_order')] = $this->getCategoryName();
+                $title_chunks[$this->params->get('category_name_order')] = $this->virtuemartHelper->getCategoryName();
             }
         }
         if ($this->params->get('category_sitename_order', 0) != 0) {
@@ -156,10 +168,10 @@ class plgSystemVmtitle extends JPlugin
     {
         $title_chunks = array();
         if ($this->params->get('productdetails_name_order', 0)) {
-            $title_chunks[$this->params->get('productdetails_name_order')] = $this->getProductName();
+            $title_chunks[$this->params->get('productdetails_name_order')] = $this->virtuemartHelper->getProductName();
         }
         if ($this->params->get('productdetails_manufacturer_order', 0)) {
-            $title_chunks[$this->params->get('productdetails_manufacturer_order')] = $this->getManufacturerName();
+            $title_chunks[$this->params->get('productdetails_manufacturer_order')] = $this->virtuemartHelper->getManufacturerName();
         }
         if ($this->params->get('productdetails_sitename_order', 0)) {
             $title_chunks[$this->params->get('productdetails_sitename_order')] = $this->getSiteName();
@@ -190,79 +202,6 @@ class plgSystemVmtitle extends JPlugin
         ksort($title_chunks);
 
         return (join(' ', $title_chunks));
-    }
-
-    /**
-     * Get full category name for current category
-     *
-     * @return string
-     */
-    private function getCategoryName()
-    {
-        $this->loadVirtuemartConfig();
-        $category = \VmModel::getModel('category')->getData();
-
-        return $category->category_name;
-    }
-
-    /**
-     * Get meta title set in VirtueMart for current category
-     *
-     * @return string
-     */
-    private function getCategoryMetaTitle()
-    {
-        $this->loadVirtuemartConfig();
-        $category = VmModel::getModel('category')->getData();
-
-        return $category->customtitle;
-    }
-
-    /**
-     * Get full name for current product
-     *
-     * @return string
-     */
-    private function getProductName()
-    {
-        $this->loadVirtuemartConfig();
-        $product = VmModel::getModel('product')->getData();
-
-        return $product->product_name;
-    }
-
-    /**
-     * Get manufacturer for current product
-     */
-    private function getManufacturerName()
-    {
-        $this->loadVirtuemartConfig();
-        $product = VmModel::getModel('product')->getData();
-
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true)
-            ->select('virtuemart_manufacturer_id')
-            ->from('#__virtuemart_product_manufacturers')
-            ->where('virtuemart_product_id = ' . $product->virtuemart_product_id);
-        $db->setQuery($query);
-        try {
-            $manufacturer = VmModel::getModel('manufacturer')->getData($db->loadResult());
-
-            return $manufacturer->mf_name;
-        } catch (\Exception $ex) {
-            return '';
-        }
-    }
-
-    /**
-     * Load VirtueMart config, which also initialize VirtueMart internal autoloader
-     */
-    private function loadVirtuemartConfig()
-    {
-        if (!class_exists('VmConfig')) {
-            require(JPATH_ADMINISTRATOR . '/components/com_virtuemart/helpers/config.php');
-        }
-        VmConfig::loadConfig();
     }
 
     /**

@@ -18,6 +18,7 @@
     </description>
     <files>
         <filename plugin="vmtitle">vmtitle.php</filename>
+        <filename>vmtitlevirtuemarthelper.php</filename>
     </files>
     <languages>
         <language tag="en-GB">en-GB.plg_system_vmtitle.ini</language>
