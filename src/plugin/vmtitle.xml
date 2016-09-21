@@ -125,8 +125,8 @@
                 <field name="product_enable"
                        default="0"
                        type="radio"
-                       description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC"
-                       label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_TITLE_ENABLE_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_TITLE_ENABLE_LABEL"
                 >
                     <option value="1">JYes</option>
                     <option value="0">JNo</option>
@@ -165,8 +165,8 @@
                 <field name="product_metadescription_enable"
                        default="0"
                        type="radio"
-                       description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMMETADESCRIPTION_ENABLE_DESC"
-                       label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMMETADESCRIPTION_ENABLE_LABEL"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_DESCRIPTION_ENABLE_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_DESCRIPTION_ENABLE_LABEL"
                 >
                     <option value="1">JYes</option>
                     <option value="0">JNo</option>
@@ -174,14 +174,43 @@
                 <field name="productdetails_metadescription_description_order"
                        type="text"
                        size="1"
-                       description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_METADESCRIPTION_DESCRIPTION_ORDER_DESC"
-                       label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_METADESCRIPTION_DESCRIPTION_ORDER_LABEL"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_DESCRIPTION_DESCRIPTION_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_DESCRIPTION_DESCRIPTION_ORDER_LABEL"
                        default="0"/>
                 <field name="productdetails_metadescription_shortdescription_order"
                        type="text"
                        size="1"
-                       description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_METADESCRIPTION_SHORTDESCRIPTION_ORDER_DESC"
-                       label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_METADESCRIPTION_SHORTDESCRIPTION_ORDER_LABEL"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_DESCRIPTION_SHORTDESCRIPTION_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_DESCRIPTION_SHORTDESCRIPTION_ORDER_LABEL"
+                       default="0"/>
+                <field type="spacer" hr="true" />
+                <field type="spacer" label="META KEYWORDS" />
+                <field name="product_keywords_enable"
+                       default="0"
+                       type="radio"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_KEYWORDS_ENABLE_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_KEYWORDS_ENABLE_LABEL"
+                >
+                    <option value="1">JYes</option>
+                    <option value="0">JNo</option>
+                </field>
+                <field name="productdetails_keywords_name_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_KEYWORDS_NAME_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_KEYWORDS_NAME_ORDER_LABEL"
+                       default="0"/>
+                <field name="productdetails_keywords_manufacturer_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_KEYWORDS_MANUFACTURER_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_KEYWORDS_MANUFACTURER_ORDER_LABEL"
+                       default="0"/>
+                <field name="productdetails_keywords_category_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_KEYWORDS_CATEGORY_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_KEYWORDS_CATEGORY_ORDER_LABEL"
                        default="0"/>
             </fieldset>
         </fields>
