@@ -42,7 +42,7 @@ class plgSystemVmtitle extends JPlugin
         }
 
         $this->setTitle();
-        $this->setDescription();
+        $this->setMetaDescription();
 
         return true;
     }
@@ -54,7 +54,7 @@ class plgSystemVmtitle extends JPlugin
      */
     private function setTitle()
     {
-        // Should set title by request?
+        // Should we set title by request?
         $title = $this->app->input->get('title', '');
         if ($title) {
             \JFactory::getDocument()->setTitle($title);
@@ -65,25 +65,25 @@ class plgSystemVmtitle extends JPlugin
         switch ($this->app->input->get('view', '')) {
             case 'virtuemart':
                 if ($this->params->get('virtuemart_enable', 0)) {
-                    $title = $this->setVirtuemartViewTitle();
+                    $title = $this->buildVirtuemartViewTitle();
                 }
                 break;
 
             case 'categories':
                 if ($this->params->get('categories_enable', 0)) {
-                    $title = $this->setCategoriesViewTitle();
+                    $title = $this->buildCategoriesViewTitle();
                 }
                 break;
 
             case 'category':
                 if ($this->params->get('category_enable', 0)) {
-                    $title = $this->setCategoryViewTitle();
+                    $title = $this->buildCategoryViewTitle();
                 }
                 break;
 
             case 'productdetails':
                 if ($this->params->get('product_enable', 0)) {
-                    $title = $this->setProductDetailsViewTitle();
+                    $title = $this->buildProductDetailsViewTitle();
                 }
                 break;
 
@@ -98,14 +98,31 @@ class plgSystemVmtitle extends JPlugin
     }
 
     /**
-     * Set meta description by request
+     * Set meta description
      *
      * @return bool
      */
-    private function setDescription()
+    private function setMetaDescription()
     {
-        if ($description = $this->app->input->get('metadescription')) {
-            JFactory::getDocument()->setDescription($description);
+        // Should we set meta description by request?
+        if ($metadescription = $this->app->input->get('metadescription')) {
+            JFactory::getDocument()->setDescription($metadescription);
+            return true;
+        }
+
+        // set meta description by rules according to page type
+        switch ($this->app->input->get('view', '')) {
+            case 'productdetails':
+                if ($this->params->get('product_metadescription_enable', 0)) {
+                    $metadescription = $this->buildProductDetailsViewMetaDescription();
+                }
+                break;
+
+            default:
+        }
+
+        if ($metadescription) {
+            JFactory::getDocument()->setDescription($metadescription);
         }
 
         return true;
@@ -116,7 +133,7 @@ class plgSystemVmtitle extends JPlugin
      *
      * @return string
      */
-    private function setCategoriesViewTitle()
+    private function buildCategoriesViewTitle()
     {
         $title_chunks = array();
         if ($this->params->get('categories_name_order', 0) != 0) {
@@ -138,7 +155,7 @@ class plgSystemVmtitle extends JPlugin
      *
      * @return string
      */
-    private function setCategoryViewTitle()
+    private function buildCategoryViewTitle()
     {
         $title_chunks = array();
         if ($this->params->get('category_name_order', 0) != 0) {
@@ -160,11 +177,11 @@ class plgSystemVmtitle extends JPlugin
     }
 
     /**
-     * Set title for "productdetails" view
+     * Build title for "productdetails" view
      *
      * @return string
      */
-    private function setProductDetailsViewTitle()
+    private function buildProductDetailsViewTitle()
     {
         $title_chunks = array();
         if ($this->params->get('productdetails_name_order', 0)) {
@@ -185,11 +202,30 @@ class plgSystemVmtitle extends JPlugin
     }
 
     /**
+     * Build meta description for "productdetails" view
+     *
+     * @return string
+     */
+    private function buildProductDetailsViewMetaDescription()
+    {
+        $chunks = array();
+        if ($this->params->get('productdetails_metadescription_description_order', 0)) {
+            $chunks[$this->params->get('productdetails_metadescription_description_order')] = $this->virtuemartHelper->getProductDescription();
+        }
+        if ($this->params->get('productdetails_metadescription_shortdescription_order', 0)) {
+            $chunks[$this->params->get('productdetails_metadescription_shortdescription_order')] = $this->virtuemartHelper->getProductShortDescription();
+        }
+        ksort($chunks);
+
+        return (join(' ', $chunks));
+    }
+
+    /**
      * Set title for "virtuemart" view
      *
      * @return string
      */
-    private function setVirtuemartViewTitle()
+    private function buildVirtuemartViewTitle()
     {
         $title_chunks = array();
         if ($this->params->get('virtuemart_sitename_order', 0) != 0) {

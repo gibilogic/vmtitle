@@ -12,14 +12,21 @@ defined('_JEXEC') or die;
 class VmtitleVirtuemartHelper
 {
     /**
+     * VmtitleVirtuemartHelper constructor.
+     */
+    public function __construct()
+    {
+        $this->loadVirtuemartConfig();
+    }
+
+    /**
      * Get full category name for current category
      *
      * @return string
      */
     public function getCategoryName()
     {
-        $this->loadVirtuemartConfig();
-        $category = \VmModel::getModel('category')->getData();
+        $category = VmModel::getModel('category')->getData();
 
         return $category->category_name;
     }
@@ -31,7 +38,6 @@ class VmtitleVirtuemartHelper
      */
     public function getCategoryMetaTitle()
     {
-        $this->loadVirtuemartConfig();
         $category = VmModel::getModel('category')->getData();
 
         return $category->customtitle;
@@ -44,10 +50,33 @@ class VmtitleVirtuemartHelper
      */
     public function getProductName()
     {
-        $this->loadVirtuemartConfig();
         $product = VmModel::getModel('product')->getData();
 
         return $product->product_name;
+    }
+
+    /**
+     * Get description for current product
+     *
+     * @return string
+     */
+    public function getProductDescription()
+    {
+        $product = VmModel::getModel('product')->getData();
+
+        return strip_tags($product->product_desc);
+    }
+
+    /**
+     * Get short description for current product
+     *
+     * @return string
+     */
+    public function getProductShortDescription()
+    {
+        $product = VmModel::getModel('product')->getData();
+
+        return strip_tags($product->product_s_desc);
     }
 
     /**
@@ -55,7 +84,6 @@ class VmtitleVirtuemartHelper
      */
     public function getManufacturerName()
     {
-        $this->loadVirtuemartConfig();
         $product = VmModel::getModel('product')->getData();
 
         $db = JFactory::getDbo();
