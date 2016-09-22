@@ -21,13 +21,7 @@ class plgSystemVmtitle extends JPlugin
      * @var \VmtitleVirtuemartHelper
      */
     private $virtuemartHelper;
-
-    public function __construct($subject, array $config)
-    {
-        parent::__construct($subject, $config);
-        $this->virtuemartHelper = new VmtitleVirtuemartHelper();
-    }
-
+    
     public function onAfterDispatch()
     {
         // frontend only
@@ -40,6 +34,8 @@ class plgSystemVmtitle extends JPlugin
         if ($this->app->input->get('option', '') != "com_virtuemart") {
             return true;
         }
+
+        $this->virtuemartHelper = new VmtitleVirtuemartHelper();
 
         $this->setTitle();
         $this->setMetaDescription();
