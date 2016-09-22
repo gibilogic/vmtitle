@@ -240,8 +240,11 @@ class plgSystemVmtitle extends JPlugin
         if ($this->params->get('productdetails_metadescription_description_order', 0)) {
             $chunks[$this->params->get('productdetails_metadescription_description_order')] = $this->virtuemartHelper->getProductDescription();
         }
-        if ($this->params->get('productdetails_metadescription_shortdescription_order', 0)) {
-            $chunks[$this->params->get('productdetails_metadescription_shortdescription_order')] = $this->virtuemartHelper->getProductShortDescription();
+        if ($this->params->get('productdetails_metadescription_name_order', 0)) {
+            $chunks[$this->params->get('productdetails_metadescription_name_order')] = $this->virtuemartHelper->getProductName();
+        }
+        if ($this->params->get('productdetails_metadescription_description_order', 0)) {
+            $chunks[$this->params->get('productdetails_metadescription_description_order')] = $this->virtuemartHelper->getProductDescription();
         }
         ksort($chunks);
 

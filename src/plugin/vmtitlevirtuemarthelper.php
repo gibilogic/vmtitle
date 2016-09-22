@@ -157,6 +157,12 @@ class VmtitleVirtuemartHelper
         foreach ($categoryIds as $categoryId) {
             $virtuemartModelCategory->setId($categoryId);
             $category = VmModel::getModel('category')->getData();
+            if (empty($category)) {
+                continue;
+            }
+            if (is_array($category)) {
+                $category = array_shift($category);
+            }
             $categoryNames[] = $category->category_name;
         }
 

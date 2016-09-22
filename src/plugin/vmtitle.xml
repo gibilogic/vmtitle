@@ -120,6 +120,8 @@
                        label="PLG_SYSTEM_VMTITLE_FIELD_CATEGORY_CUSTOMTEXT_LABEL" default=""/>
             </fieldset>
             <fieldset name="product" label="PLG_SYSTEM_VMTITLE_FIELDSET_PRODUCT_LABEL">
+
+                <!-- product title options -->
                 <field type="spacer" hr="true" />
                 <field type="spacer" label="TITLE" />
                 <field name="product_enable"
@@ -160,6 +162,8 @@
                        description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_DESC"
                        label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_LABEL"
                        default=""/>
+
+                <!-- product meta description options -->
                 <field type="spacer" hr="true" />
                 <field type="spacer" label="META DESCRIPTION" />
                 <field name="product_metadescription_enable"
@@ -171,6 +175,12 @@
                     <option value="1">JYes</option>
                     <option value="0">JNo</option>
                 </field>
+                <field name="productdetails_metadescription_name_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_DESCRIPTION_NAME_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_DESCRIPTION_NAME_ORDER_LABEL"
+                       default="0"/>
                 <field name="productdetails_metadescription_description_order"
                        type="text"
                        size="1"
@@ -183,6 +193,8 @@
                        description="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_DESCRIPTION_SHORTDESCRIPTION_ORDER_DESC"
                        label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_DESCRIPTION_SHORTDESCRIPTION_ORDER_LABEL"
                        default="0"/>
+
+                <!-- product meta keywords options -->
                 <field type="spacer" hr="true" />
                 <field type="spacer" label="META KEYWORDS" />
                 <field name="product_keywords_enable"
