@@ -101,8 +101,13 @@ class VmtitleVirtuemartHelper
     public function getProductDescription()
     {
         $product = VmModel::getModel('product')->getData($this->productId);
+        $description = $product->product_desc;
+        if (empty($description) && !empty($product->product_parent_id)) {
+            $parentProduct = VmModel::getModel('product')->getData($product->product_parent_id);
+            $description = $parentProduct->product_desc;
+        }
 
-        return strip_tags($product->product_desc);
+        return strip_tags($description);
     }
 
     /**
@@ -113,8 +118,13 @@ class VmtitleVirtuemartHelper
     public function getProductShortDescription()
     {
         $product = VmModel::getModel('product')->getData($this->productId);
+        $shortDescription = $product->product_s_desc;
+        if (empty($shortDescription) && !empty($product->product_parent_id)) {
+            $parentProduct = VmModel::getModel('product')->getData($product->product_parent_id);
+            $shortDescription = $parentProduct->product_s_desc;
+        }
 
-        return strip_tags($product->product_s_desc);
+        return strip_tags($shortDescription);
     }
 
     /**
