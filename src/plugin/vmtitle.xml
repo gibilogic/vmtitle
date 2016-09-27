@@ -29,8 +29,8 @@
                 <field name="virtuemart_enable"
                        default="0"
                        type="radio"
-                       description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC"
-                       label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_TITLE_ENABLE_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_TITLE_ENABLE_LABEL"
                 >
                     <option value="1">JYes</option>
                     <option value="0">JNo</option>
@@ -57,8 +57,8 @@
                 <field name="categories_enable"
                        default="0"
                        type="radio"
-                       description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC"
-                       label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_TITLE_ENABLE_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_TITLE_ENABLE_LABEL"
                 >
                     <option value="1">JYes</option>
                     <option value="0">JNo</option>
@@ -95,8 +95,8 @@
             </fieldset>
             <fieldset name="category" label="PLG_SYSTEM_VMTITLE_FIELDSET_CATEGORY_LABEL">
                 <field name="category_enable" default="0" type="radio"
-                       description="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_DESC"
-                       label="PLG_SYSTEM_VMTITLE_FIELD_CUSTOMTITLE_ENABLE_LABEL">
+                       description="PLG_SYSTEM_VMTITLE_FIELD_TITLE_ENABLE_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_TITLE_ENABLE_LABEL">
                     <option value="1">JYes</option>
                     <option value="0">JNo</option>
                 </field>
