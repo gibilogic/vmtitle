@@ -86,9 +86,7 @@ class VmtitleVirtuemartHelper
      */
     public function getProductName()
     {
-
-
-        $product = VmModel::getModel('product')->getData($this->productId);
+        $product = $this->getProduct($this->productId);
 
         return $product->product_name;
     }
@@ -100,10 +98,10 @@ class VmtitleVirtuemartHelper
      */
     public function getProductDescription()
     {
-        $product = VmModel::getModel('product')->getData($this->productId);
+        $product = $this->getProduct($this->productId);
         $description = $product->product_desc;
         if (empty($description) && !empty($product->product_parent_id)) {
-            $parentProduct = VmModel::getModel('product')->getData($product->product_parent_id);
+            $parentProduct = $this->getProduct($product->product_parent_id);
             $description = $parentProduct->product_desc;
         }
 
@@ -117,10 +115,10 @@ class VmtitleVirtuemartHelper
      */
     public function getProductShortDescription()
     {
-        $product = VmModel::getModel('product')->getData($this->productId);
+        $product = $this->getProduct($this->productId);
         $shortDescription = $product->product_s_desc;
         if (empty($shortDescription) && !empty($product->product_parent_id)) {
-            $parentProduct = VmModel::getModel('product')->getData($product->product_parent_id);
+            $parentProduct = $this->getProduct($product->product_parent_id);
             $shortDescription = $parentProduct->product_s_desc;
         }
 
@@ -132,8 +130,7 @@ class VmtitleVirtuemartHelper
      */
     public function getManufacturerNameByProduct()
     {
-        $product = VmModel::getModel('product')->getData($this->productId);
-
+        $product = $this->getProduct($this->productId);
         $db = JFactory::getDbo();
         $query = $db->getQuery(true)
             ->select('virtuemart_manufacturer_id')
@@ -159,14 +156,15 @@ class VmtitleVirtuemartHelper
         $virtuemartModelCategory = VmModel::getModel('category');
         $categoryIds = $virtuemartModelProduct->getProductCategories($this->productId, true);
         if (empty($categoryIds)) {
-            $product = VmModel::getModel('product')->getData($this->productId);
+            $virtuemartModelProduct->setId($this->productId);
+            $product = $virtuemartModelProduct->getData();
             $categoryIds = $virtuemartModelProduct->getProductCategories($product->product_parent_id, true);
         }
 
         $categoryNames = array();
         foreach ($categoryIds as $categoryId) {
             $virtuemartModelCategory->setId($categoryId);
-            $category = VmModel::getModel('category')->getData();
+            $category = $virtuemartModelCategory->getData();
             if (empty($category)) {
                 continue;
             }
@@ -177,6 +175,18 @@ class VmtitleVirtuemartHelper
         }
 
         return implode(",",$categoryNames);
+    }
+
+    /**
+     * @param int $productId
+     * @return \stdClass mixed
+     */
+    private function getProduct($productId)
+    {
+        $productModel = VmModel::getModel('product');
+        $productModel->setId($productId);
+
+        return $productModel->getData();
     }
 
     /**
