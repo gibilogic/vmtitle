@@ -225,6 +225,94 @@
                        label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_KEYWORDS_CATEGORY_ORDER_LABEL"
                        default="0"/>
             </fieldset>
+            <fieldset name="manufacturer" label="PLG_SYSTEM_VMTITLE_FIELDSET_MANUFACTURER_LABEL">
+
+                <!-- manufacturer title options -->
+                <field type="spacer" hr="true" />
+                <field type="spacer" label="TITLE" />
+                <field name="manufacturer_enable"
+                       default="0"
+                       type="radio"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_TITLE_ENABLE_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_TITLE_ENABLE_LABEL"
+                >
+                    <option value="1">JYes</option>
+                    <option value="0">JNo</option>
+                </field>
+                <field name="manufacturer_name_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_NAME_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_NAME_ORDER_LABEL"
+                       default="0"/>
+                <field name="manufacturer_customtext_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_CUSTOMTEXT_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_PRODUCTDETAILS_CUSTOMTEXT_ORDER_LABEL"
+                       default="0"/>
+                <field name="manufacturer_customtext"
+                       type="text"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_CUSTOMTEXT_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_CUSTOMTEXT_LABEL"
+                       default=""/>
+
+                <!-- manufacturer meta description options -->
+                <field type="spacer" hr="true" />
+                <field type="spacer" label="META DESCRIPTION" />
+                <field name="manufacturer_metadescription_enable"
+                       default="0"
+                       type="radio"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_DESCRIPTION_ENABLE_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_DESCRIPTION_ENABLE_LABEL"
+                >
+                    <option value="1">JYes</option>
+                    <option value="0">JNo</option>
+                </field>
+                <field name="manufacturer_metadescription_name_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_DESCRIPTION_NAME_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_DESCRIPTION_NAME_ORDER_LABEL"
+                       default="0"/>
+                <field name="manufacturer_metadescription_description_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_DESCRIPTION_DESCRIPTION_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_DESCRIPTION_DESCRIPTION_ORDER_LABEL"
+                       default="0"/>
+
+                <!-- manufacturer meta keywords options -->
+                <field type="spacer" hr="true" />
+                <field type="spacer" label="META KEYWORDS" />
+                <field name="manufacturer_keywords_enable"
+                       default="0"
+                       type="radio"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_KEYWORDS_ENABLE_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_KEYWORDS_ENABLE_LABEL"
+                >
+                    <option value="1">JYes</option>
+                    <option value="0">JNo</option>
+                </field>
+                <field name="manufacturer_keywords_name_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_KEYWORDS_NAME_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_KEYWORDS_NAME_ORDER_LABEL"
+                       default="0"/>
+                <field name="manufacturer_keywords_description_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_KEYWORDS_DESCRIPTION_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_KEYWORDS_DESCRIPTION_ORDER_LABEL"
+                       default="0"/>
+                <field name="manufacturer_keywords_category_order"
+                       type="text"
+                       size="1"
+                       description="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_KEYWORDS_CATEGORY_ORDER_DESC"
+                       label="PLG_SYSTEM_VMTITLE_FIELD_MANUFACTURER_KEYWORDS_CATEGORY_ORDER_LABEL"
+                       default="0"/>
+            </fieldset>
         </fields>
     </config>
 </extension>

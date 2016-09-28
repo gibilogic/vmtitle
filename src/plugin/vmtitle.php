@@ -1,14 +1,14 @@
 <?php
 
 /**
- * @version         vmtitle.php 2016-09-21 12:34:00 UTC zanardi
- * @package            GiBi VMtitle
- * @author            GiBiLogic <info@gibilogic.com>
- * @authorUrl        http://www.gibilogic.com
- * @license            GNU/GPL v3 or later
+ * @version     vmtitle.php 2016-09-28 12:50:00 UTC zanardi
+ * @package     GiBi VMtitle
+ * @author      GiBiLogic <info@gibilogic.com>
+ * @authorUrl   http://www.gibilogic.com
+ * @license     GNU/GPL v3 or later
  */
 defined('_JEXEC') or die;
-require_once __DIR__ .'/vmtitlevirtuemarthelper.php';
+require_once __DIR__ . '/vmtitlevirtuemarthelper.php';
 
 class plgSystemVmtitle extends JPlugin
 {
@@ -21,7 +21,7 @@ class plgSystemVmtitle extends JPlugin
      * @var \VmtitleVirtuemartHelper
      */
     private $virtuemartHelper;
-    
+
     public function onAfterDispatch()
     {
         // frontend only
@@ -84,6 +84,12 @@ class plgSystemVmtitle extends JPlugin
                 }
                 break;
 
+            case 'manufacturer':
+                if ($this->params->get('manufacturer_enable', 0)) {
+                    $title = $this->buildManufacturerViewTitle();
+                }
+                break;
+
             default:
         }
 
@@ -115,6 +121,13 @@ class plgSystemVmtitle extends JPlugin
                 }
                 break;
 
+            case 'manufacturer':
+                if ($this->params->get('manufacturer_metadescription_enable', 0)) {
+                    $metadescription = $this->buildManufacturerViewMetaDescription();
+                }
+                break;
+
+
             default:
         }
 
@@ -141,8 +154,13 @@ class plgSystemVmtitle extends JPlugin
         // set meta description by rules according to page type
         switch ($this->app->input->get('view', '')) {
             case 'productdetails':
-                if ($this->params->get('product_metadescription_enable', 0)) {
+                if ($this->params->get('product_keywords_enable', 0)) {
                     $metakeywords = $this->buildProductDetailsViewMetaKeywords();
+                }
+                break;
+            case 'manufacturer':
+                if ($this->params->get('manufacturer_keywords_enable', 0)) {
+                    $metakeywords = $this->buildManufacturerViewMetaKeywords();
                 }
                 break;
 
@@ -230,6 +248,25 @@ class plgSystemVmtitle extends JPlugin
     }
 
     /**
+     * Build title for "manufacturer" view
+     *
+     * @return string
+     */
+    private function buildManufacturerViewTitle()
+    {
+        $title_chunks = array();
+        if ($this->params->get('manufacturer_name_order', 0)) {
+            $title_chunks[$this->params->get('manufacturer_name_order')] = $this->virtuemartHelper->getManufacturerName();
+        }
+        if ($this->params->get('manufacturer_customtext_order', 0)) {
+            $title_chunks[$this->params->get('manufacturer_customtext_order')] = $this->params->get('manufacturer_customtext', '');
+        }
+        ksort($title_chunks);
+
+        return (join(' ', $title_chunks));
+    }
+
+    /**
      * Build meta description for "productdetails" view
      *
      * @return string
@@ -252,6 +289,26 @@ class plgSystemVmtitle extends JPlugin
     }
 
     /**
+     * Build meta description for "manufacturer" view
+     *
+     * @return string
+     */
+    private function buildManufacturerViewMetaDescription()
+    {
+        $chunks = array();
+        if ($this->params->get('manufacturer_metadescription_description_order', 0)) {
+            $chunks[$this->params->get('manufacturer_metadescription_description_order')] = $this->virtuemartHelper->getProductDescription();
+        }
+        if ($this->params->get('manufacturer_metadescription_name_order', 0)) {
+            $chunks[$this->params->get('manufacturer_metadescription_name_order')] = $this->virtuemartHelper->getManufacturerName();
+        }
+
+        ksort($chunks);
+
+        return (join(' ', $chunks));
+    }
+
+    /**
      * Build meta keywords for "productdetails" view
      *
      * @return string
@@ -267,6 +324,29 @@ class plgSystemVmtitle extends JPlugin
         }
         if ($this->params->get('productdetails_keywords_category_order', 0)) {
             $chunks[$this->params->get('productdetails_keywords_category_order')] = $this->virtuemartHelper->getCategoryNameByProduct();
+        }
+
+        ksort($chunks);
+
+        return (join(',', $chunks));
+    }
+
+    /**
+     * Build meta keywords for "manufacturer" view
+     *
+     * @return string
+     */
+    private function buildManufacturerViewMetaKeywords()
+    {
+        $chunks = array();
+        if ($this->params->get('manufacturer_keywords_name_order', 0)) {
+            $chunks[$this->params->get('manufacturer_keywords_name_order')] = $this->virtuemartHelper->getManufacturerName();
+        }
+        if ($this->params->get('manufacturer_keywords_description_order', 0)) {
+            $chunks[$this->params->get('manufacturer_keywords_description_order')] = implode(",", explode(" ", $this->virtuemartHelper->getManufacturerDescription()));
+        }
+        if ($this->params->get('manufacturer_keywords_category_order', 0)) {
+            $chunks[$this->params->get('manufacturer_keywords_category_order')] = $this->virtuemartHelper->getCategoryNameByManufacturer();
         }
 
         ksort($chunks);

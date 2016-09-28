@@ -25,6 +25,7 @@ class VmtitleVirtuemartHelper
         $this->app = \JFactory::getApplication();
         $this->productId = $this->getProductId();
         $this->categoryId = $this->getCategoryId();
+        $this->manufacturerId = $this->getManufacturerId();
     }
 
     /**
@@ -53,6 +54,20 @@ class VmtitleVirtuemartHelper
         }
 
         return $this->app->input->get('virtuemart_category_id');
+    }
+    
+    /**
+     * Get current manufacturer id (if we're in manufacturer view)
+     *
+     * @return string
+     */
+    public function getManufacturerId()
+    {
+        if ($this->app->input->get('view', '') != 'manufacturer') {
+            return 0;
+        }
+
+        return $this->app->input->get('virtuemart_manufacturer_id');
     }
 
     /**
@@ -89,6 +104,30 @@ class VmtitleVirtuemartHelper
         $product = $this->getProduct($this->productId);
 
         return $product->product_name;
+    }
+    
+    /**
+     * Get full name for current manufacturer
+     *
+     * @return string
+     */
+    public function getManufacturerName()
+    {
+        $manufacturer = $this->getManufacturer($this->manufacturerId);
+
+        return $manufacturer->mf_name;
+    }
+
+    /**
+     * Get description for current manufacturer
+     *
+     * @return string
+     */
+    public function getManufacturerDescription()
+    {
+        $manufacturer = $this->getManufacturer($this->manufacturerId);
+
+        return strip_tags($manufacturer->mf_desc);
     }
 
     /**
@@ -177,6 +216,21 @@ class VmtitleVirtuemartHelper
         return implode(",",$categoryNames);
     }
 
+   /**
+     * Get category name for current manufacturer. If manufacturer belongs to multiple categories, the name will be the
+    *  union of all the categories names.
+     */
+    public function getCategoryNameByManufacturer()
+    {
+        $manufacturer = $this->getManufacturer($this->manufacturerId);
+        /** @var VirtuemartModelManufacturercategories $virtuemartModelManufacturer */
+        $virtuemartModelManufacturercategories = VmModel::getModel('manufacturercategories');
+        $virtuemartModelManufacturercategories->setId($manufacturer->virtuemart_manufacturercategories_id);
+        $virtuemartManufacturerCategory = $virtuemartModelManufacturercategories->getData();
+
+        return $virtuemartManufacturerCategory->mf_category_name;
+    }
+
     /**
      * @param int $productId
      * @return \stdClass mixed
@@ -187,6 +241,18 @@ class VmtitleVirtuemartHelper
         $productModel->setId($productId);
 
         return $productModel->getData();
+    }
+    
+    /**
+     * @param int $manufacturerId
+     * @return \stdClass mixed
+     */
+    private function getManufacturer($manufacturerId)
+    {
+        $manufacturerModel = VmModel::getModel('manufacturer');
+        $manufacturerModel->setId($manufacturerId);
+
+        return $manufacturerModel->getData();
     }
 
     /**
